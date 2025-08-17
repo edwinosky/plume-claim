@@ -1,7 +1,7 @@
 const { ethers } = require("ethers");
 
-// --- DATOS QUE OBTUVISTE ---
-// ¡¡¡AQUÍ ESTÁN LAS DIRECCIONES CORREGIDAS CON SU CHECKSUM!!!
+// --- DATA YOU OBTAINED ---
+// HERE ARE THE CORRECTED ADDRESSES WITH THEIR CHECKSUM!!!
 const onBehalfOf_raw = "0xEE46358C95D7995eFC34260D34DfBe0a2FE23a5E";
 const contractAddress_raw = "0xA6d5766b0AA22967Cd03FDC5C11AA81304A9D6B1";
 const chainId = 98866;
@@ -28,21 +28,21 @@ const proof = [
     "0xa03af8117ebe8d7eea5d752c16b882a840e92f9ed2566f838d5d0b31cfd48fd9"
 ];
 
-// --- CÁLCULOS ---
+// --- CALCULATIONS ---
 
-// 0. Validar direcciones antes de usarlas
+// 0. Validate addresses before using them
 let onBehalfOf, contractAddress;
 try {
     onBehalfOf = ethers.getAddress(onBehalfOf_raw);
     contractAddress = ethers.getAddress(contractAddress_raw);
-    console.log("✅ Direcciones validadas con checksum OK.");
+    console.log("✅ Checksum validated addresses OK.");
 } catch (error) {
-    console.error("❌ ¡ERROR! Una de las direcciones tiene un checksum incorrecto. Copia la dirección EXACTA del explorador de bloques.");
+    console.error("❌ ERROR! One of the addresses has an incorrect checksum. Copy the EXACT address from the block explorer.");
     console.error(error.message);
-    process.exit(1); // Salir del script si hay error
+    process.exit(1); // Exit script on error
 }
 
-// 1. Calcular la hoja (leaf)
+// 1. Calculate the leaf
 const leaf = ethers.keccak256(
     ethers.solidityPacked(
         ["address", "uint256"],
@@ -51,7 +51,7 @@ const leaf = ethers.keccak256(
 );
 console.log(`\nLeaf: ${leaf}`);
 
-// 2. Reconstruir la raíz (root)
+// 2. Reconstruct the root
 let root = leaf;
 for (const proofElement of proof) {
     if (Buffer.compare(Buffer.from(root.slice(2), 'hex'), Buffer.from(proofElement.slice(2), 'hex')) > 0) {
@@ -62,7 +62,7 @@ for (const proofElement of proof) {
 }
 console.log(`Root: ${root}`);
 
-// 3. Generar el mensaje que necesita ser firmado
+// 3. Generate the message that needs to be signed
 const messageToSign = ethers.keccak256(
     ethers.solidityPacked(
         ["address", "uint256", "bytes32", "address", "uint256"],
@@ -70,7 +70,7 @@ const messageToSign = ethers.keccak256(
     )
 );
 
-console.log("\n--- 🏆 ¡DATOS COMPLETOS! ---");
-console.log(`Este es el Message Hash que el signer (0xaee7B7...) debe firmar:\n`);
+console.log("\n--- 🏆 COMPLETE DATA! ---");
+console.log(`This is the Message Hash that the signer (0xaee7B7...) must sign:\n`);
 console.log(messageToSign);
 console.log("\n---------------------------------");

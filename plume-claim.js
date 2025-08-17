@@ -1,6 +1,6 @@
 const { ethers } = require("ethers");
 const provider = new ethers.providers.JsonRpcProvider('https://rpc.plumenetwork.xyz');
-const secureWallet = new ethers.Wallet('TU_PRIVATE_KEY', provider);
+const secureWallet = new ethers.Wallet('YOUR_PRIVATE_KEY', provider);
 const compromisedAddress = "0x..."; // 
 const amount = ethers.utils.parseUnits("1000", 18); // 
 const proof = ["0x...", "0x..."]; // Merkle proof
@@ -27,7 +27,7 @@ for (const node of proof) {
   );
 }
 
-// Ejecutar reclamo
+// Execute claim
 const tx = await contract.claim(
   proof,
   signature,
@@ -36,6 +36,6 @@ const tx = await contract.claim(
   { value: feeAmount }
 );
 
-console.log("Transacción enviada:", tx.hash);
+console.log("Transaction sent:", tx.hash);
 await tx.wait();
-console.log("Reclamo completado en bloque:", tx.blockNumber);
+console.log("Claim completed in block:", tx.blockNumber);
