@@ -1,0 +1,25 @@
+{
+  "name": "plume-claim",
+  "version": "1.0.0",
+  "description": "",
+  "main": "plume-claim.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edwinosky/plume-claim.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/edwinosky/plume-claim/issues"
+  },
+  "homepage": "https://github.com/edwinosky/plume-claim#readme",
+  "dependencies": {
+    "ethers": "^6.15.0",
+    "merkletreejs": "^0.5.2"
+  }
+}
